@@ -53,6 +53,7 @@ a {
 }
 
 .prose-article h2 {
+  scroll-margin-top: 110px;
   margin-top: 2rem;
   margin-bottom: 0.9rem;
   font-size: clamp(1.35rem, 2vw, 1.75rem);

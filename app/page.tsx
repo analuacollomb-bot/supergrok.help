@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, CircleHelp, Compass, Rocket, Users } from "lucide-react";
+import { ArrowRight, BookOpen, CircleHelp, Compass, ListChecks } from "lucide-react";
 import ArticleCard from "@/components/ArticleCard";
 import CTASection from "@/components/CTASection";
 import FAQSection from "@/components/FAQSection";
 import Hero from "@/components/Hero";
-import ProductCard from "@/components/ProductCard";
 import SEOJsonLd from "@/components/SEOJsonLd";
 import { siteConfig } from "@/config/site";
 import { articles } from "@/data/articles";
@@ -42,8 +41,31 @@ const homeFaqs = [
   },
 ];
 
+const quickGuides = [
+  {
+    title: "SuperGrok 购买前说明",
+    text: "了解 SuperGrok 适合哪些人、和普通 Grok 有什么区别，以及国内用户下单前要确认什么。",
+    href: "/supergrok",
+  },
+  {
+    title: "Grok 国内使用教程",
+    text: "按账号、登录、访问、付款和首次使用流程拆解，适合刚接触 Grok 的中文用户。",
+    href: "/grok-china",
+  },
+  {
+    title: "Grok 账号服务说明",
+    text: "说明独享账号、账号交付、登录习惯和售后材料准备，不做夸张承诺。",
+    href: "/grok-account",
+  },
+  {
+    title: "常见问题 FAQ",
+    text: "集中查看购买、登录失败、付款失败、账号安全、发货和中文体验等问题。",
+    href: "/faq",
+  },
+];
+
 export default function HomePage() {
-  const recommended = articles.slice(0, 6);
+  const recommended = articles.slice(0, 8);
 
   const websiteJsonLd = {
     "@context": "https://schema.org",
@@ -60,55 +82,63 @@ export default function HomePage() {
       <Hero />
 
       <section className="section-padding bg-[#f7fbff]">
-        <div className="container-page grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-          <div>
+        <div className="container-page">
+          <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 rounded-full bg-brand-50 px-3 py-1.5 text-sm font-bold text-brand-700">
               <Compass className="h-4 w-4" aria-hidden="true" />
-              Grok / SuperGrok 简介
+              新手入口
             </div>
-            <h2 className="mt-4 text-3xl font-black leading-tight text-ink">
-              先看懂能力、账号和开通方式，再决定是否下单
-            </h2>
+            <h2 className="mt-4 text-3xl font-black leading-tight text-ink">从这 4 个入口开始了解 Grok</h2>
             <p className="mt-4 text-base leading-8 text-slate-600">
-              Grok 是面向问答、搜索、写作、代码、资料整理等场景的 AI 工具。SuperGrok 通常更适合高频使用、需要更高额度或更深度处理任务的用户。本站以中文教程方式整理新手路径，帮助你把账号、访问、付款和售后问题拆清楚。
+              本站按教程站方式组织内容：先解释 Grok / SuperGrok 是什么，再梳理国内用户常见的账号、登录、访问、付款和售后问题。每个入口都尽量用清单和步骤说明，方便被搜索引擎理解，也方便新手快速定位问题。
             </p>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            <ProductCard
-              title="SuperGrok 使用说明"
-              description="适合想了解 SuperGrok 能力、差异和购买前注意事项的用户。"
-              points={["适合高频写作、学习、搜索和代码任务", "购买前先确认账号类型与使用频率", "遇到问题先按教程准备截图和订单信息"]}
-            />
-            <ProductCard
-              title="Grok 账号服务说明"
-              description="围绕账号交付、登录、独享号、售后材料和使用习惯进行说明。"
-              points={["不把账号服务描述成平台直属渠道", "强调合规使用和账号责任", "所有下单入口统一跳转服务站"]}
-            />
+          <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {quickGuides.map((guide) => (
+              <Link
+                key={guide.href}
+                href={guide.href}
+                className="group rounded-2xl border border-sky-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-brand-100 hover:shadow-soft"
+              >
+                <h3 className="text-lg font-black text-ink group-hover:text-brand-700">{guide.title}</h3>
+                <p className="mt-3 min-h-24 text-sm leading-7 text-slate-600">{guide.text}</p>
+                <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-brand-700">
+                  查看说明
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
 
       <section className="section-padding bg-white">
-        <div className="container-page">
-          <div className="max-w-2xl">
+        <div className="container-page grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+          <div>
             <div className="inline-flex items-center gap-2 rounded-full bg-brand-50 px-3 py-1.5 text-sm font-bold text-brand-700">
-              <Users className="h-4 w-4" aria-hidden="true" />
-              适合哪些人使用
+              <ListChecks className="h-4 w-4" aria-hidden="true" />
+              新手阅读路径
             </div>
-            <h2 className="mt-4 text-3xl font-black text-ink">把 Grok 变成稳定的学习和工作助手</h2>
+            <h2 className="mt-4 text-3xl font-black text-ink">建议按问题类型阅读，而不是直接下单</h2>
+            <p className="mt-4 text-base leading-8 text-slate-600">
+              如果你只是想了解 Grok，先看国内使用和提示词教程；如果你已经明确需要 SuperGrok，再看购买前说明；如果已经下单或拿到账号，再看登录、风控和售后材料相关内容。
+            </p>
           </div>
-          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4">
             {[
-              ["学生与自学用户", "整理知识框架、解释概念、生成复习提纲和练习题。"],
-              ["内容创作者", "辅助选题、标题、脚本、长文改写和热点资料整理。"],
-              ["跨境与运营人员", "生成多语言客服回复、Listing 草稿和竞品分析框架。"],
-              ["程序员与技术用户", "解释代码、排查报错、生成测试思路和学习新框架。"],
-            ].map(([title, text]) => (
-              <div key={title} className="rounded-2xl border border-sky-100 bg-sky-50/70 p-6">
-                <CheckCircle2 className="h-6 w-6 text-mint" aria-hidden="true" />
-                <h3 className="mt-4 text-lg font-black text-ink">{title}</h3>
-                <p className="mt-2 text-sm leading-7 text-slate-600">{text}</p>
+              ["第一次了解 Grok", "先阅读《Grok 国内怎么使用？2026 最新完整教程》和 FAQ。"],
+              ["准备开通 SuperGrok", "重点看 SuperGrok 区别、会员是否值得买、付款失败和生效时间。"],
+              ["已经遇到问题", "按登录、充值、付款、账号风控分类排查，并保存截图。"],
+            ].map(([title, text], index) => (
+              <div key={title} className="flex gap-4 rounded-2xl border border-sky-100 bg-sky-50/70 p-5">
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand-600 text-sm font-black text-white">
+                  {index + 1}
+                </span>
+                <div>
+                  <h3 className="font-black text-ink">{title}</h3>
+                  <p className="mt-1 text-sm leading-7 text-slate-600">{text}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -117,7 +147,7 @@ export default function HomePage() {
 
       <section className="section-padding bg-[#f7fbff]">
         <div className="container-page grid gap-6 lg:grid-cols-[1fr_0.95fr]">
-          <div className="rounded-3xl border border-sky-100 bg-white p-7 shadow-sm">
+          <div className="rounded-2xl border border-sky-100 bg-white p-7 shadow-sm">
             <div className="inline-flex items-center gap-2 rounded-full bg-brand-50 px-3 py-1.5 text-sm font-bold text-brand-700">
               <CircleHelp className="h-4 w-4" aria-hidden="true" />
               国内用户常见问题
@@ -138,39 +168,25 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-sky-100 bg-white p-7 shadow-sm">
+          <div className="rounded-2xl border border-sky-100 bg-white p-7 shadow-sm">
             <div className="inline-flex items-center gap-2 rounded-full bg-brand-50 px-3 py-1.5 text-sm font-bold text-brand-700">
-              <Rocket className="h-4 w-4" aria-hidden="true" />
-              购买 / 开通流程
+              <BookOpen className="h-4 w-4" aria-hidden="true" />
+              教程覆盖内容
             </div>
-            <h2 className="mt-4 text-3xl font-black text-ink">四步完成下单前判断</h2>
-            <ol className="mt-6 grid gap-4">
+            <h2 className="mt-4 text-3xl font-black text-ink">文章会持续围绕这些主题扩展</h2>
+            <div className="mt-6 grid gap-4">
               {[
-                ["阅读教程", "先确认 Grok、SuperGrok、账号服务分别解决什么问题。"],
-                ["选择类型", "根据使用频率、是否独享、是否需要会员能力选择合适方案。"],
-                ["前往下单", "点击按钮跳转到超哥 AI 服务，阅读商品说明后自助下单。"],
-                ["保存材料", "购买后保存订单号、邮箱、交付信息和异常截图，方便售后。"],
-              ].map(([title, text], index) => (
-                <li key={title} className="flex gap-4">
-                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand-600 text-sm font-black text-white">
-                    {index + 1}
-                  </span>
-                  <span>
-                    <strong className="block text-ink">{title}</strong>
-                    <span className="mt-1 block text-sm leading-7 text-slate-600">{text}</span>
-                  </span>
-                </li>
+                ["基础教程", "注册、登录、中文使用、提示词、新手流程。"],
+                ["购买前说明", "SuperGrok 区别、会员判断、付款失败、订阅取消。"],
+                ["账号与售后", "独享账号、成品号、风控、交付后如何开始使用。"],
+                ["场景对比", "学生、创作者、程序员、跨境电商和工具对比。"],
+              ].map(([title, text]) => (
+                <div key={title} className="rounded-2xl bg-sky-50 p-4">
+                  <h3 className="font-black text-ink">{title}</h3>
+                  <p className="mt-1 text-sm leading-7 text-slate-600">{text}</p>
+                </div>
               ))}
-            </ol>
-            <a
-              href={siteConfig.orderUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-7 inline-flex items-center justify-center gap-2 rounded-full bg-brand-600 px-6 py-3 text-base font-bold text-white transition hover:bg-brand-700"
-            >
-              前往{siteConfig.serviceName}下单
-              <ArrowRight className="h-5 w-5" aria-hidden="true" />
-            </a>
+            </div>
           </div>
         </div>
       </section>
@@ -189,7 +205,7 @@ export default function HomePage() {
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
-          <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {recommended.map((article) => (
               <ArticleCard key={article.slug} article={article} />
             ))}

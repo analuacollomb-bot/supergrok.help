@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, CalendarDays } from "lucide-react";
+import { ArrowRight, CalendarDays, Clock3, ListTree } from "lucide-react";
 import ArticleCard from "@/components/ArticleCard";
 import ArticleFixedCTA from "@/components/ArticleFixedCTA";
 import Breadcrumb from "@/components/Breadcrumb";
@@ -9,7 +9,7 @@ import CTASection from "@/components/CTASection";
 import FAQSection from "@/components/FAQSection";
 import SEOJsonLd from "@/components/SEOJsonLd";
 import { siteConfig } from "@/config/site";
-import { articleToPlainText, articles, getArticleBySlug, getRelatedArticles } from "@/data/articles";
+import { articleToPlainText, articles, getArticleBySlug, getReadingMinutes, getRelatedArticles } from "@/data/articles";
 
 type ArticlePageProps = {
   params: Promise<{
@@ -59,6 +59,11 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
   }
 
   const related = getRelatedArticles(article);
+  const readingMinutes = getReadingMinutes(article);
+  const toc = article.content.map((section, index) => ({
+    id: `section-${index + 1}`,
+    title: section.heading,
+  }));
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -110,9 +115,16 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
               </span>
               <h1 className="mt-5 text-4xl font-black leading-tight sm:text-5xl">{article.title}</h1>
               <p className="mt-5 max-w-3xl text-lg leading-8 text-sky-100/82">{article.excerpt}</p>
-              <div className="mt-5 flex items-center gap-2 text-sm text-sky-100/70">
-                <CalendarDays className="h-4 w-4" aria-hidden="true" />
-                <time dateTime={article.date}>发布时间：{article.date}</time>
+              <div className="mt-5 flex flex-wrap items-center gap-4 text-sm text-sky-100/72">
+                <span className="inline-flex items-center gap-2">
+                  <CalendarDays className="h-4 w-4" aria-hidden="true" />
+                  更新时间：
+                  <time dateTime={article.date}>{article.date}</time>
+                </span>
+                <span className="inline-flex items-center gap-2">
+                  <Clock3 className="h-4 w-4" aria-hidden="true" />
+                  阅读时间：约 {readingMinutes} 分钟
+                </span>
               </div>
             </div>
           </div>
@@ -121,14 +133,28 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
         <section className="bg-[#f7fbff] py-10">
           <div className="container-page grid gap-8 lg:grid-cols-[minmax(0,760px)_1fr]">
             <div className="rounded-3xl border border-sky-100 bg-white p-6 shadow-sm sm:p-9">
+              <div className="mb-8 rounded-2xl border border-sky-100 bg-sky-50 p-5 lg:hidden">
+                <h2 className="flex items-center gap-2 text-lg font-black text-ink">
+                  <ListTree className="h-5 w-5 text-brand-600" aria-hidden="true" />
+                  目录
+                </h2>
+                <nav className="mt-4 grid gap-2" aria-label="文章目录">
+                  {toc.map((item) => (
+                    <a key={item.id} href={`#${item.id}`} className="text-sm font-semibold leading-6 text-slate-600 hover:text-brand-700">
+                      {item.title}
+                    </a>
+                  ))}
+                </nav>
+              </div>
+
               <div className="prose-article">
-                {article.content.map((section) => (
+                {article.content.map((section, index) => (
                   <section key={section.heading}>
-                    <h2>{section.heading}</h2>
+                    <h2 id={`section-${index + 1}`}>{section.heading}</h2>
                     {section.paragraphs.map((paragraph) => (
                       <p key={paragraph}>{paragraph}</p>
                     ))}
-                    <h3>{section.subheading}</h3>
+                    <h3 id={`section-${index + 1}-note`}>{section.subheading}</h3>
                     <p>{section.subparagraph}</p>
                   </section>
                 ))}
@@ -140,7 +166,7 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
                   需要 Grok / SuperGrok 账号服务？可以前往超哥 AI 服务自助下单。下单前请确认商品说明、交付方式和售后范围。
                 </p>
                 <a
-                  href={siteConfig.articleOrderUrl}
+                  href={siteConfig.orderUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-4 inline-flex items-center gap-2 rounded-full bg-brand-600 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-brand-700"
@@ -152,6 +178,19 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
             </div>
 
             <aside className="space-y-5">
+              <div className="sticky top-28 hidden rounded-3xl border border-sky-100 bg-white p-6 shadow-sm lg:block">
+                <h2 className="flex items-center gap-2 text-xl font-black text-ink">
+                  <ListTree className="h-5 w-5 text-brand-600" aria-hidden="true" />
+                  目录
+                </h2>
+                <nav className="mt-4 grid gap-2" aria-label="文章目录">
+                  {toc.map((item) => (
+                    <a key={item.id} href={`#${item.id}`} className="text-sm font-semibold leading-6 text-slate-600 hover:text-brand-700">
+                      {item.title}
+                    </a>
+                  ))}
+                </nav>
+              </div>
               <div className="rounded-3xl border border-sky-100 bg-white p-6 shadow-sm">
                 <h2 className="text-xl font-black text-ink">相关阅读</h2>
                 <div className="mt-4 grid gap-3">

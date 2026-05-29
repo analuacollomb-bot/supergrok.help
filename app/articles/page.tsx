@@ -14,6 +14,8 @@ export const metadata: Metadata = {
 };
 
 export default function ArticlesPage() {
+  const categories = Array.from(new Set(articles.map((article) => article.category)));
+
   return (
     <>
       <section className="bg-[#06111f] py-14 text-white">
@@ -34,6 +36,16 @@ export default function ArticlesPage() {
 
       <section className="section-padding bg-[#f7fbff]">
         <div className="container-page">
+          <div className="mb-8 rounded-2xl border border-sky-100 bg-white p-5 shadow-sm">
+            <h2 className="text-xl font-black text-ink">文章分类</h2>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {categories.map((category) => (
+                <span key={category} className="rounded-full bg-brand-50 px-3 py-1.5 text-sm font-bold text-brand-700">
+                  {category} · {articles.filter((article) => article.category === category).length}
+                </span>
+              ))}
+            </div>
+          </div>
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {articles.map((article) => (
               <ArticleCard key={article.slug} article={article} />

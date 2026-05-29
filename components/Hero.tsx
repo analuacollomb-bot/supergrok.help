@@ -16,24 +16,24 @@ export default function Hero() {
       />
       <div className="absolute inset-0 bg-gradient-to-r from-[#030814] via-[#06111f]/82 to-[#06111f]/18" />
       <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#f7fbff] to-transparent" />
-      <div className="container-page relative z-10 grid min-h-[700px] items-center gap-10 py-16 lg:grid-cols-[0.95fr_1.05fr] lg:py-20">
+      <div className="container-page relative z-10 grid min-h-[620px] items-center gap-10 py-14 lg:grid-cols-[0.95fr_1.05fr] lg:py-16">
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-sky-300/30 bg-sky-400/10 px-3 py-1.5 text-sm font-semibold text-sky-100">
             <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
             第三方教程与服务说明
           </div>
           <h1 className="mt-6 max-w-3xl text-4xl font-black leading-tight text-white sm:text-5xl lg:text-6xl">
-            SuperGrok 国内使用与购买帮助中心
+            Grok / SuperGrok 中文教程帮助中心
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-sky-100/86">
-            提供 Grok / SuperGrok 使用教程、购买说明、账号服务介绍与常见问题整理，帮助国内用户更快了解和使用 Grok AI。
+            汇总 Grok 国内使用、SuperGrok 购买前说明、账号登录问题和新手 FAQ，帮助中文用户按步骤了解 Grok AI。
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/supergrok"
+              href="/articles"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-sky-400 px-6 py-3.5 text-base font-bold text-[#06111f] shadow-[0_0_36px_rgba(56,189,248,0.34)] transition hover:bg-sky-300"
             >
-              查看 SuperGrok 教程
+              浏览教程文章
               <ArrowRight className="h-5 w-5" aria-hidden="true" />
             </Link>
             <a
@@ -72,7 +72,7 @@ export default function Hero() {
               </div>
             </div>
             <div className="mt-6 grid gap-3">
-              {["国内访问与登录排查", "SuperGrok 购买前说明", "账号服务与售后准备"].map((item) => (
+              {["国内使用完整教程", "SuperGrok 开通指南", "登录付款问题 FAQ"].map((item) => (
                 <div key={item} className="rounded-2xl border border-sky-300/18 bg-white/8 px-4 py-3 text-sm font-semibold text-sky-50">
                   {item}
                 </div>

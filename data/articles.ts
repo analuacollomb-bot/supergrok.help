@@ -614,3 +614,8 @@ export function articleToPlainText(article: Article) {
     .flatMap((section) => [section.heading, ...section.paragraphs, section.subheading, section.subparagraph])
     .join("\n");
 }
+
+export function getReadingMinutes(article: Article) {
+  const textLength = articleToPlainText(article).replace(/\s/g, "").length;
+  return Math.max(3, Math.ceil(textLength / 500));
+}

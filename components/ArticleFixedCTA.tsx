@@ -10,7 +10,7 @@ export default function ArticleFixedCTA() {
           <p className="text-xs text-slate-500">前往超哥 AI 服务自助下单</p>
         </div>
         <a
-          href={siteConfig.articleOrderUrl}
+          href={siteConfig.orderUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-600 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-brand-700"
